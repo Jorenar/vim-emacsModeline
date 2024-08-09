@@ -23,7 +23,7 @@ endif
 " Add all default entries to the mode dict, keeping any user-defined entries
 call extend(g:emacsModeDict, s:emacsModeDictDefault, 'keep')
 
-function! <SID>FindParameterValue(modeline, emacs_name, value)
+function! s:FindParameterValue(modeline, emacs_name, value)
   let pattern = '\c' . '\(^\|.*;\)\s*' . a:emacs_name . ':\s*\(' . a:value . '\)\s*\($\|;.*\)'
   if a:modeline =~ pattern
     return substitute(a:modeline, pattern, '\2', '')
@@ -31,8 +31,8 @@ function! <SID>FindParameterValue(modeline, emacs_name, value)
   return ''
 endfunc
 
-function! <SID>SetVimModeOption(modeline)
-  let value = <SID>FindParameterValue(a:modeline, 'mode', '[A-Za-z_+-]\+')
+function! s:SetVimModeOption(modeline)
+  let value = s:FindParameterValue(a:modeline, 'mode', '[A-Za-z_+-]\+')
   if strlen(value)
     let value = tolower(value)
     if (has_key(g:emacsModeDict, value))
@@ -42,8 +42,8 @@ function! <SID>SetVimModeOption(modeline)
   endif
 endfunc
 
-function! <SID>SetVimNumberOption(modeline, emacs_name, vim_name)
-  let value = <SID>FindParameterValue(a:modeline, a:emacs_name, '\d\+')
+function! s:SetVimNumberOption(modeline, emacs_name, vim_name)
+  let value = s:FindParameterValue(a:modeline, a:emacs_name, '\d\+')
   if strlen(value)
     exec 'setlocal ' . a:vim_name . '=' . value
     return 1
@@ -51,8 +51,8 @@ function! <SID>SetVimNumberOption(modeline, emacs_name, vim_name)
   return 0
 endfunc
 
-function! <SID>SetVimStringOption(modeline, emacs_name, vim_name, validate_pattern)
-  let value = <SID>FindParameterValue(a:modeline, a:emacs_name, a:validate_pattern)
+function! s:SetVimStringOption(modeline, emacs_name, vim_name, validate_pattern)
+  let value = s:FindParameterValue(a:modeline, a:emacs_name, a:validate_pattern)
   if strlen(value)
     exec 'setlocal ' . a:vim_name . '=' . value
     return 1
@@ -60,8 +60,8 @@ function! <SID>SetVimStringOption(modeline, emacs_name, vim_name, validate_patte
   return 0
 endfunc
 
-function! <SID>SetVimToggleOption(modeline, emacs_name, vim_name, nil_value)
-  let value = <SID>FindParameterValue(a:modeline, a:emacs_name, '[^;[:space:]]\+')
+function! s:SetVimToggleOption(modeline, emacs_name, vim_name, nil_value)
+  let value = s:FindParameterValue(a:modeline, a:emacs_name, '[^;[:space:]]\+')
   if strlen(value)
     if (value ==# 'nil') == a:nil_value
       exec 'setlocal ' . a:vim_name
@@ -71,24 +71,24 @@ function! <SID>SetVimToggleOption(modeline, emacs_name, vim_name, nil_value)
   endif
 endfunc
 
-function! <SID>ParseEmacsOption(modeline)
+function! s:ParseEmacsOption(modeline)
 
-  call <SID>SetVimModeOption(a:modeline)
+  call s:SetVimModeOption(a:modeline)
 
-  call <SID>SetVimNumberOption(a:modeline, 'fill-column',        'textwidth')
-  if <SID>SetVimNumberOption(a:modeline,   'tab-width',          'tabstop')
+  call s:SetVimNumberOption(a:modeline, 'fill-column',        'textwidth')
+  if s:SetVimNumberOption(a:modeline,   'tab-width',          'tabstop')
     " - When shiftwidth is zero, the 'tabstop' value is used.
     "   Use the shiftwidth() function to get the effective shiftwidth value.
     " - When 'sts' is negative, the value of 'shiftwidth' is used.
     setlocal shiftwidth=0
     setlocal softtabstop=-1
   endif
-  call <SID>SetVimNumberOption(a:modeline, 'c-basic-offset',     'softtabstop')
-  call <SID>SetVimNumberOption(a:modeline, 'c-basic-offset',     'shiftwidth')
+  call s:SetVimNumberOption(a:modeline, 'c-basic-offset',     'softtabstop')
+  call s:SetVimNumberOption(a:modeline, 'c-basic-offset',     'shiftwidth')
 
-  call <SID>SetVimToggleOption(a:modeline, 'buffer-read-only',   'readonly',     0)
-  call <SID>SetVimToggleOption(a:modeline, 'indent-tabs-mode',   'expandtab',    1)
-  call <SID>SetVimStringOption(a:modeline, 'coding',             'fileencoding', '[\w\-]\+')
+  call s:SetVimToggleOption(a:modeline, 'buffer-read-only',   'readonly',     0)
+  call s:SetVimToggleOption(a:modeline, 'indent-tabs-mode',   'expandtab',    1)
+  call s:SetVimStringOption(a:modeline, 'coding',             'fileencoding', '[\w\-]\+')
 
   let value = substitute(a:modeline, '^ *\([^ ]*\) *$', '\L\1', '')
   if (has_key(g:emacsModeDict, value))
@@ -113,7 +113,7 @@ function! ParseEmacsModeLine()
     let line = getline(n)
     if line =~ pattern
       let modeline = substitute(line, pattern, '\1', '')
-      call <SID>ParseEmacsOption(modeline)
+      call s:ParseEmacsOption(modeline)
     endif
   endfor
 
@@ -154,7 +154,7 @@ function! ParseEmacsModeLine()
       let modeline = getline(n)
       let modeline = substitute(modeline, '^'.cstart, '', '')
       let modeline = substitute(modeline, cend.'$', '', '')
-      call <SID>ParseEmacsOption(modeline)
+      call s:ParseEmacsOption(modeline)
     endfor
   endif
 endfunc
