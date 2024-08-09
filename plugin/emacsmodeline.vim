@@ -43,7 +43,7 @@ function! <SID>SetVimModeOption(modeline)
     if (has_key(g:emacsModeDict, value))
       let value = g:emacsModeDict[value]
     endif
-    exec 'setlocal filetype=' . value
+    exec 'setf' value
   endif
 endfunc
 
@@ -97,7 +97,7 @@ function! <SID>ParseEmacsOption(modeline)
 
   let value = substitute(a:modeline, '^ *\([^ ]*\) *$', '\L\1', '')
   if (has_key(g:emacsModeDict, value))
-    exec 'setlocal filetype=' .  g:emacsModeDict[value]
+    exec 'setf' g:emacsModeDict[value]
   endif
 
   " Other emacs options seen in the wild include:
