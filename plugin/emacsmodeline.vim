@@ -7,11 +7,6 @@
 if exists('g:loaded_emacsmodeline') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim
 
-" No attempt is made to support vim versions before 7.0.
-if v:version < 700
-  finish
-endif
-
 " Note: Entries to emacsModeDict must be lowercase. E. g. 'makefile' instead of 'Makefile'.
 let s:emacsModeDictDefault = {
       \   'c++':          'cpp',
