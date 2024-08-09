@@ -1,4 +1,4 @@
-emacsmodeline.vim
+EmacsModeline.vim
 =================
 
 The goal of this plugin is to parser Emacs' File Variables in similar fashion
@@ -15,6 +15,6 @@ will be interpreted the same as:
 
 ---
 
-This is a fork of [emacsmodeline.vim](https://github.com/sfiera/vim-emacsmodeline)
+This is a fork of [vim-emacsmodeline](https://github.com/sfiera/vim-emacsmodeline)
 ([script #3381](http://www.vim.org/scripts/script.php?script_id=3381))
 by [Chris Pickel](https://github.com/sfiera)

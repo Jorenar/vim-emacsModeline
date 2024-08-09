@@ -1,4 +1,4 @@
-" emacsmodeline
+" EmacsModeline.vim
 " -*- mode: vim; tab-width: 2; indent-tabs-mode: nil; fill-column: 80 -*-
 " Author: Chris Pickel <sfiera@gmail.com>
 " Maintainer: Jorengarenar <dev@jorenar.com>
