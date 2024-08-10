@@ -137,31 +137,31 @@ function! s:parseFirstLines() abort
 endfunction
 
 function! s:parseLocalVariables() abort
-  let fsize = bufname('')->getfsize()
-  let start_min = (fsize > 3000) ? byte2line(fsize-3000) : 1
+  let l:fsize = bufname('')->getfsize()
+  let l:start_min = (l:fsize > 3000) ? byte2line(l:fsize-3000) : 1
 
-  call cursor(line('$'), 99)
-  let end = search('End:', 'b', start_min)
-  if end == 0 | return {} | endif
+  call cursor('$', 999)
+  let l:end = search('End:', 'b', l:start_min)
+  if l:end == 0 | return {} | endif
 
-  call cursor(end, 99)
-  const pattern = '\v^(\A*)\s*Local [Vv]ariables:\s*(\A*)$'
-  let start = search(pattern, 'b', start_min)
-  if start == 0 | return {} | endif
+  call cursor(l:end, 999)
+  let l:pattern = '\v^(\A*)\s*Local [Vv]ariables:\s*(\A*)$'
+  let l:start = search(l:pattern, 'b', l:start_min)
+  if l:start == 0 | return {} | endif
 
-  let firstline = getline(start)
-  let cstart = substitute(firstline, pattern, '\1', '')
-  let cend = substitute(firstline, pattern, '\2', '')
+  let l:firstline = getline(l:start)
+  let l:cstart = substitute(l:firstline, l:pattern, '\1', '')
+  let l:cend = substitute(l:firstline, l:pattern, '\2', '')
 
-  let [ start, end ] += [ 1, -1 ]
-  if end <= start | return {} | endif
+  let [ l:start, l:end ] += [ 1, -1 ]
+  if l:start > l:end | return {} | endif
 
   let l:options = {}
-  for line in getline(start, end)
-    let line = line
-          \ ->substitute('\V\^'.cstart, '', '')
-          \ ->substitute('\V'.cend.'\$', '', '')
-    call extend(l:options, s:parseOptionsInLine(line))
+  for l:line in getline(l:start, l:end)
+    let l:line = l:line
+          \ ->substitute('\V\^'.l:cstart, '', '')
+          \ ->substitute('\V'.l:cend.'\$', '', '')
+    call extend(l:options, s:parseOptionsInLine(l:line))
   endfor
   return l:options
 endfunction
