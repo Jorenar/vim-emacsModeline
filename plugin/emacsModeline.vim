@@ -1,13 +1,13 @@
 " EmacsModeline.vim
-" -*- mode: vim; tab-width: 2; indent-tabs-mode: nil; fill-column: 80 -*-
+" -*- mode: vim; tab-width: 2; indent-tabs-mode: nil; fill-column: 90 -*-
 " Author: Jorengarenar <dev@jorenar.com>
 " License: Vim
 
 if exists('g:loaded_emacsModeline') | finish | endif
 let s:cpo_save = &cpo | set cpo&vim
 
-let g:emacsMode2vimFt = get(g:, 'emacsMode2vimFt', {})
-call extend(g:emacsMode2vimFt,
+let g:emacsModeline_mode2filetype = get(g:, 'emacsModeline_mode2filetype', {})
+call extend(g:emacsModeline_mode2filetype,
       \ {
       \   'c++':          'cpp',
       \   'js':           'javascript',
@@ -16,9 +16,9 @@ call extend(g:emacsMode2vimFt,
       \   'shell-script': 'sh',
       \ },
       \ 'keep')
-call map(copy(g:emacsMode2vimFt),
-      \  {k -> extend(g:emacsMode2vimFt,
-      \               { tolower(k): tolower(g:emacsMode2vimFt->remove(k)) }) }
+call map(copy(g:emacsModeline_mode2filetype),
+      \  {k -> extend(g:emacsModeline_mode2filetype,
+      \               { tolower(k): tolower(g:emacsModeline_mode2filetype->remove(k)) }) }
       \ )
 
 
@@ -176,7 +176,7 @@ function! ParseEmacsModelines()
   call setpos('.', l:pos)
 
   if has_key(l:options, 'mode')
-    let l:ft = {m -> get(g:emacsMode2vimFt, m, m)}(tolower(l:options.mode))
+    let l:ft = {m -> get(g:emacsModeline_mode2filetype, m, m)}(tolower(l:options.mode))
     if empty(&ft)
       exec 'setf' l:ft
     elseif l:ft != &ft
@@ -194,7 +194,7 @@ function! ParseEmacsModelines()
   for [l:opt,l:val] in items(l:options)
     call s:setEmacsOpt(l:opt, l:val)
   endfor
-endfunc
+endfunction
 
 augroup EMACSMODELINE
   autocmd!
