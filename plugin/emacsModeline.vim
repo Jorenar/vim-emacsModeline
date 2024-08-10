@@ -140,8 +140,6 @@ function! s:parseLocalVariables() abort
   let fsize = bufname('')->getfsize()
   let start_min = (fsize > 3000) ? byte2line(fsize-3000) : 1
 
-  let pos = getcurpos()
-
   call cursor(line('$'), 99)
   let end = search('End:', 'b', start_min)
   if end == 0 | return {} | endif
@@ -150,8 +148,6 @@ function! s:parseLocalVariables() abort
   const pattern = '\v^(\A*)\s*Local [Vv]ariables:\s*(\A*)$'
   let start = search(pattern, 'b', start_min)
   if start == 0 | return {} | endif
-
-  call setpos('.', pos)
 
   let firstline = getline(start)
   let cstart = substitute(firstline, pattern, '\1', '')
@@ -171,9 +167,13 @@ function! s:parseLocalVariables() abort
 endfunction
 
 function! ParseEmacsModelines()
+  let l:pos = getcurpos()
+
   let l:options = {}
   call extend(l:options, s:parseFirstLines())
   call extend(l:options, s:parseLocalVariables())
+
+  call setpos('.', l:pos)
 
   if has_key(l:options, 'mode')
     let l:ft = {m -> get(g:emacsMode2vimFt, m, m)}(tolower(l:options.mode))
