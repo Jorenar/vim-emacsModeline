@@ -1,4 +1,4 @@
-" EmacsModeline.vim
+" EmacsModeline
 " -*- mode: vim; tab-width: 2; indent-tabs-mode: nil; fill-column: 90 -*-
 " Author: Jorengarenar <dev@jorenar.com>
 " License: Vim

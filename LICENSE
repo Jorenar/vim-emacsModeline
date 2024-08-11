@@ -1,25 +1,25 @@
 VIM LICENSE
 
-I)  There are no restrictions on distributing unmodified copies of EmacsModeline.vim
+I)  There are no restrictions on distributing unmodified copies of EmacsModeline
     except that they must include this license text.  You can also distribute
-    unmodified parts of EmacsModeline.vim, likewise unrestricted except that they must
+    unmodified parts of EmacsModeline, likewise unrestricted except that they must
     include this license text.  You are also allowed to include executables
-    that you made from the unmodified EmacsModeline.vim sources, plus your own usage
+    that you made from the unmodified EmacsModeline sources, plus your own usage
     examples and Vim scripts.
 
-II) It is allowed to distribute a modified (or extended) version of EmacsModeline.vim,
+II) It is allowed to distribute a modified (or extended) version of EmacsModeline,
     including executables and/or source code, when the following four
     conditions are met:
     1) This license text must be included unmodified.
-    2) The modified EmacsModeline.vim must be distributed in one of the following five
+    2) The modified EmacsModeline must be distributed in one of the following five
        ways:
-       a) If you make changes to EmacsModeline.vim yourself, you must clearly describe
+       a) If you make changes to EmacsModeline yourself, you must clearly describe
           in the distribution how to contact you.  When the maintainer asks
-          you (in any way) for a copy of the modified EmacsModeline.vim you
+          you (in any way) for a copy of the modified EmacsModeline you
           distributed, you must make your changes, including source code,
           available to the maintainer without fee.  The maintainer reserves
           the right to include your changes in the official version of
-          EmacsModeline.vim.  What the maintainer will do with your changes and under
+          EmacsModeline.  What the maintainer will do with your changes and under
           what license they will be distributed is negotiable.  If there has
           been no negotiation then this license, or a later version, also
           applies to your changes. The current maintainer is Bram Moolenaar
@@ -29,44 +29,44 @@ II) It is allowed to distribute a modified (or extended) version of EmacsModelin
           obligation to send him your changes ceases.  Once the maintainer has
           confirmed that he has received your changes they will not have to be
           sent again.
-       b) If you have received a modified EmacsModeline.vim that was distributed as
+       b) If you have received a modified EmacsModeline that was distributed as
           mentioned under a) you are allowed to further distribute it
           unmodified, as mentioned at I).  If you make additional changes the
           text under a) applies to those changes.
        c) Provide all the changes, including source code, with every copy of
-          the modified EmacsModeline.vim you distribute.  This may be done in the form
+          the modified EmacsModeline you distribute.  This may be done in the form
           of a context diff.  You can choose what license to use for new code
           you add.  The changes and their license must not restrict others
-          from making their own changes to the official version of EmacsModeline.vim.
-       d) When you have a modified EmacsModeline.vim which includes changes as
+          from making their own changes to the official version of EmacsModeline.
+       d) When you have a modified EmacsModeline which includes changes as
           mentioned under c), you can distribute it without the source code
           for the changes if the following three conditions are met:
           - The license that applies to the changes permits you to distribute
             the changes to the Vim maintainer without fee or restriction, and
             permits the Vim maintainer to include the changes in the official
-            version of EmacsModeline.vim without fee or restriction.
+            version of EmacsModeline without fee or restriction.
           - You keep the changes for at least three years after last
-            distributing the corresponding modified EmacsModeline.vim.  When the
-            maintainer or someone who you distributed the modified EmacsModeline.vim
+            distributing the corresponding modified EmacsModeline.  When the
+            maintainer or someone who you distributed the modified EmacsModeline
             to asks you (in any way) for the changes within this period, you
             must make them available to him.
           - You clearly describe in the distribution how to contact you.  This
             contact information must remain valid for at least three years
-            after last distributing the corresponding modified EmacsModeline.vim, or
+            after last distributing the corresponding modified EmacsModeline, or
             as long as possible.
        e) When the GNU General Public License (GPL) applies to the changes,
-          you can distribute the modified EmacsModeline.vim under the GNU GPL version
+          you can distribute the modified EmacsModeline under the GNU GPL version
           2 or any later version.
     3) A message must be added, at least in the output of the ":version"
        command and in the intro screen, such that the user of the modified
-       EmacsModeline.vim is able to see that it was modified.  When distributing as
+       EmacsModeline is able to see that it was modified.  When distributing as
        mentioned under 2)e) adding the message is only required for as far as
        this does not conflict with the license used for the changes.
     4) The contact information as required under 2)a) and 2)d) must not be
        removed or changed, except that the person himself can make
        corrections.
 
-III) If you distribute a modified version of EmacsModeline.vim, you are encouraged to
+III) If you distribute a modified version of EmacsModeline, you are encouraged to
      use the Vim license for your changes and make them available to the
      maintainer, including the source code.  The preferred way to do this is
      by e-mail or by uploading the files to a server and e-mailing the URL. If
@@ -75,6 +75,6 @@ III) If you distribute a modified version of EmacsModeline.vim, you are encourag
      <maintainer@vim.org>
 
 IV)  It is not allowed to remove this license from the distribution of the
-     EmacsModeline.vim sources, parts of it or from a modified version.  You may use
-     this license for previous EmacsModeline.vim releases instead of the license that
+     EmacsModeline sources, parts of it or from a modified version.  You may use
+     this license for previous EmacsModeline releases instead of the license that
      they came with, at your option.

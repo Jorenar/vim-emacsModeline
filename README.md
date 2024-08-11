@@ -1,5 +1,5 @@
-EmacsModeline.vim
-=================
+EmacsModeline
+=============
 
 The goal of this plugin is to add support of Emacs' equivalent of modelines:
 [File Variables](https://www.gnu.org/software/emacs/manual/html_node/emacs/File-Variables.html)
