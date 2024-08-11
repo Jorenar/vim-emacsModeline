@@ -18,7 +18,7 @@ call extend(g:emacsModeline_mode2filetype,
       \ 'keep')
 call map(copy(g:emacsModeline_mode2filetype),
       \  {k -> extend(g:emacsModeline_mode2filetype,
-      \               { tolower(k): tolower(g:emacsModeline_mode2filetype->remove(k)) }) }
+      \               { tolower(k): g:emacsModeline_mode2filetype->remove(k) }) }
       \ )
 
 
@@ -56,7 +56,7 @@ let s:opt_ts = {
       \ }
 
 
-function! s:setVimOpt(opt, val)
+function! s:setVimOpt(opt, val) abort
   if a:val ==# 't'
     try
       exec 'let' '&l:'.a:opt '=' 's:opt_ts[a:opt]'
@@ -87,7 +87,7 @@ function! s:setVimOpt(opt, val)
   endif
 endfunction
 
-function! s:setEmacsOpt(emacs_opt, val)
+function! s:setEmacsOpt(emacs_opt, val) abort
   let l:options = []
   if has_key(s:opts_map, a:emacs_opt)
     let l:options = s:opts_map[a:emacs_opt]
@@ -166,7 +166,42 @@ function! s:parseLocalVariables() abort
   return l:options
 endfunction
 
-function! ParseEmacsModelines()
+function! s:listFiletypes() abort
+  let l:fts = []
+  let l:fts += getcompletion('', 'filetype')
+  let l:fts += g:emacsModeline_mode2filetype->values()
+  let l:fts += range(1, bufnr('$'))->map('getbufvar(v:val, "&ft")')->filter('!empty(v:val)')
+
+  let l:autocmds = has('nvim') ? nvim_get_autocmds({}) : autocmd_get()
+  let l:fts += l:autocmds->copy()
+        \ ->filter('v:val.event == "FileType"')
+        \ ->map('v:val.pattern')
+  let l:fts += l:autocmds->copy()
+        \ ->map(has('nvim') ? 'v:val.command' : 'v:val.cmd')
+        \ ->matchstrlist('\v\C%(<setf%[iletype]\s+%(FALLBACK\s+)?|<%(ft|filetype)\=)\zs\f+')
+        \ ->map('v:val.text')
+
+  return l:fts->sort()->uniq()
+endfunction
+
+function! s:setFiletype(mode) abort
+  let l:ft = {m -> g:emacsModeline_mode2filetype->get(m, m)}(tolower(a:mode))
+
+  if getcompletion(l:ft, 'filetype')->index(l:ft) < 0
+    let l:filetypes = s:listFiletypes()
+    let l:idx = l:filetypes->index(l:ft, 0, v:true)
+    if l:idx < 0 | return | endif
+    let l:ft = l:filetypes[l:idx]
+  endif
+
+  if empty(&ft)
+    exec 'setf' l:ft
+  elseif l:ft != &ft
+    exec 'set' 'filetype='.l:ft
+  endif
+endfunction
+
+function! ParseEmacsModelines() abort
   let l:pos = getcurpos()
 
   let l:options = {}
@@ -176,12 +211,7 @@ function! ParseEmacsModelines()
   call setpos('.', l:pos)
 
   if has_key(l:options, 'mode')
-    let l:ft = {m -> get(g:emacsModeline_mode2filetype, m, m)}(tolower(l:options.mode))
-    if empty(&ft)
-      exec 'setf' l:ft
-    elseif l:ft != &ft
-      exec 'set' 'filetype='.l:ft
-    endif
+    call s:setFiletype(l:options.mode)
     call remove(l:options, 'mode')
   endif
 
