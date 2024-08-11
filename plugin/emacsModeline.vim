@@ -201,7 +201,27 @@ function! s:setFiletype(mode) abort
   endif
 endfunction
 
-function! ParseEmacsModelines() abort
+function! s:isEnabled() abort
+  if !&l:modeline
+    return v:false
+  endif
+
+  if get(g:, 'emacsModeline_skip_if_modeline', v:true) && &modelines > 0
+    let l:lines = getline(1, &modelines) + getline(line('$')-&modelines, line('$'))
+    let l:patterns = [
+          \   '\v\C((^|\s)(vi|vim([<=>]?\d\d\d)?)|\s+ex):\s*(set?)@!\S',
+          \   '\v\C((^|\s)(vi|vim([<=>]?\d\d\d)?)|\s+ex):\s*set?\s+\S.*:',
+          \   '\v\C(^|\s)Vim([<=>]?\d\d\d)?:\s*set \S.*:',
+          \ ]
+    if l:patterns->map('l:lines->match(v:val)') != [ -1, -1, -1 ]
+      return v:false
+    endif
+  endif
+
+  return v:true
+endfunction
+
+function! s:parseEmacsModelines() abort
   let l:pos = getcurpos()
 
   let l:options = {}
@@ -228,7 +248,7 @@ endfunction
 
 augroup EMACSMODELINE
   autocmd!
-  autocmd BufReadPost * if &modeline | call ParseEmacsModelines() | endif
+  autocmd BufReadPost * if s:isEnabled() | call s:parseEmacsModelines() | endif
 augroup END
 
 let g:loaded_emacsModeline = 1
