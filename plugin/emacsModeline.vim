@@ -11,6 +11,7 @@ call extend(g:emacsModeline_mode2filetype,
       \ {
       \   'c++':          'cpp',
       \   'js':           'javascript',
+      \   'linux-c':      'c',
       \   'makefile':     'make',
       \   'protobuf':     'proto',
       \   'shell-script': 'sh',
