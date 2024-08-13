@@ -1,0 +1,56 @@
+*emacsModeline.txt*   Parsing Emacs' File Variables
+
+This plugin allows Vim to interpret and apply settings
+from Emacs' File Variables in similar fashion as |modeline|s.
+
+==============================================================================
+Configuration
+
+                                                *g:emacsModeline_mode2filetype*
+Dictionary to map Emacs modes to Vim filetypes.
+Default: >
+  {
+    "c++": "cpp",
+    "js": "javascript",
+    "makefile": "make",
+    "protobuf": "proto",
+    "shell-script": "sh",
+  }
+<
+                                             *g:emacsModeline_skip_if_modeline*
+Do not parse Emacs File Variables if bufer already contains Vim modeline.
+Default: `v:true`
+
+                                                       *emacsModeline-modeline*
+                                                      *emacsModeline-modelines*
+The plugin will activate only if option 'modeline' is set.
+If you still want parsing of Emacs' File Variables, but not Vim's modelines,
+then set 'modeline' on, and 'modelines' to 0.
+
+==============================================================================
+Supported options
+
+Emacs options and which Vim options they set:
+
+  ".*-basic-offset":  'softtabstop', 'shiftwidth'
+  "basic-offset": 'softtabstop', 'shiftwidth'
+  "buffer-read-only": 'readonly'
+  "coding": 'fileencoding'
+  "encoding": 'fileencoding'
+  "fill-column": 'textwidth'
+  "indent-tabs-mode": 'expandtab'
+  "tab-width": 'tabstop'
+
+==============================================================================
+Author                                                   *emacsModeline-author*
+Jorengarenar <dev@jorenar.com>
+
+Greatly inspired and rewritten from vim-emacsmodeline by Chris Pickel,
+patched by David Perry with support of Local Variables.
+
+==============================================================================
+License
+Vim license
+
+==============================================================================
+ vim:tw=78:ts=2:sts=2:sw=2:ft=help:norl:

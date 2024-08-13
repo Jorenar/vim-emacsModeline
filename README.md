@@ -19,4 +19,4 @@ This is a rewrite of [vim-emacsmodeline](https://github.com/sfiera/vim-emacsmode
 ([script #3381](http://www.vim.org/scripts/script.php?script_id=3381))
 by [Chris Pickel](https://github.com/sfiera), \
 [patched](https://github.com/Boolean263/vim-emacsmodeline/compare/995594f63aeffb93f4112f40542c8bf8d417cc1f..f39602c94bbb83fe4b361c554ddbc1f8f1e058bd)
-with support for Local Variables by [David Perry](https://github.com/Boolean263).
+by [David Perry](https://github.com/Boolean263) with support for Local Variables.
