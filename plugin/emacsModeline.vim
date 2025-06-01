@@ -107,17 +107,17 @@ function! s:setEmacsOpt(emacs_opt, val) abort
   endfor
 endfunction
 
-function! s:parseOptionsInLine(line) abort
+function! s:parseOptionsInLine(line, isFirstLine) abort
   if a:line !~ '[:;]'
     return { 'mode': trim(a:line) }
   endif
 
   let l:options = {}
 
-  for l:v in a:line->split(';')
+  for l:v in (a:isFirstLine ? a:line->split(';') : [a:line])
     let l:opt = l:v->split(':')->map('trim(v:val)')
-    let l:key = tolower(l:opt[0])
-    let l:options[key] = l:opt[1]
+    let l:key = tolower(l:opt[0])->trim()
+    let l:options[key] = join(l:opt[1:], ':')
   endfor
 
   return l:options
@@ -131,7 +131,7 @@ function! s:parseFirstLines() abort
       let l:line = l:line
             \ ->substitute('\M^\.\{-}-*-', '', '')
             \ ->substitute('\M-*-\.\{-}$', '', '')
-      call extend(l:options, s:parseOptionsInLine(l:line))
+      call extend(l:options, s:parseOptionsInLine(l:line, v:true))
     endif
   endfor
   return l:options
@@ -162,7 +162,7 @@ function! s:parseLocalVariables() abort
     let l:line = l:line
           \ ->substitute('\V\^'.l:cstart, '', '')
           \ ->substitute('\V'.l:cend.'\$', '', '')
-    call extend(l:options, s:parseOptionsInLine(l:line))
+    call extend(l:options, s:parseOptionsInLine(l:line, v:false))
   endfor
   return l:options
 endfunction
